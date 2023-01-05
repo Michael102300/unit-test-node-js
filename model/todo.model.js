@@ -1,4 +1,4 @@
-const moongose = require("moongose");
+const moongose = require("mongoose");
 
 const TodoSchema = new moongose.Schema({
   title: {
