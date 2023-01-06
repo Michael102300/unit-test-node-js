@@ -11,4 +11,10 @@ describe(endpointUrl, () => {
     expect(res.body.title).toBe(newTodo.title);
     expect(res.body.done).toBe(newTodo.done);
   });
+  it("should return error 500 on malformed data with POST", async () => {
+    const res = await request(app)
+      .post(endpointUrl)
+      .send({ title: "Missing done property" });
+    expect(res.statusCode).toBe(500);
+  });
 });
