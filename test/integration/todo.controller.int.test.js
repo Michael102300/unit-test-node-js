@@ -1,8 +1,11 @@
 const request = require("supertest");
+const { response } = require("../../app");
 const app = require("../../app");
 const newTodo = require("../mock-data/new-todo.json");
 
 const endpointUrl = "/todos/";
+
+let firstTodo;
 
 describe(endpointUrl, () => {
   test("GET" + endpointUrl, async () => {
@@ -12,7 +15,23 @@ describe(endpointUrl, () => {
     expect(Array.isArray(res.body)).toBeTruthy();
     expect(res.body[0].title).toBeDefined();
     expect(res.body[0].done).toBeDefined();
+    firstTodo = res.body[0];
   });
+
+  test("GET by id" + endpointUrl + ":todoId", async () => {
+    const res = await request(app).get(endpointUrl + firstTodo._id);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.title).toBe(firstTodo.title);
+    expect(res.body.done).toBe(firstTodo.done);
+  });
+
+  test("GET todoById doesnt exits" + endpointUrl + ":todoId", async () => {
+    const res = await request(app).get(
+      endpointUrl + "63b77789208d4daba8e53fe4"
+    );
+    expect(res.statusCode).toBe(404);
+  });
+
   it("POST" + endpointUrl, async () => {
     const res = await request(app).post(endpointUrl).send(newTodo);
     expect(res.statusCode).toBe(201);
