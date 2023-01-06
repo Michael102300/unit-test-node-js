@@ -31,3 +31,20 @@ exports.getTodoById = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.updateTodo = async (req, res, next) => {
+  try {
+    const todoId = req.params.todoId;
+    const bodyUpdate = req.body;
+    const updateTodo = await TodoModel.findByIdAndUpdate(todoId, bodyUpdate, {
+      new: true,
+    });
+    if (updateTodo) {
+      res.status(200).json(updateTodo);
+    } else {
+      res.status(404).send();
+    }
+  } catch (error) {
+    next(error);
+  }
+};
