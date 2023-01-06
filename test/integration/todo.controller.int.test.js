@@ -16,5 +16,8 @@ describe(endpointUrl, () => {
       .post(endpointUrl)
       .send({ title: "Missing done property" });
     expect(res.statusCode).toBe(500);
+    expect(res.body).toStrictEqual({
+      message: "Todo validation failed: done: Path `done` is required.",
+    });
   });
 });
