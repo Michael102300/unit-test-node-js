@@ -17,3 +17,13 @@ exports.getTodos = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getTodoById = async (req, res, next) => {
+  try {
+    const todoId = req.params.todoId;
+    const todoById = await TodoModel.findById(todoId);
+    res.status(200).json(todoById);
+  } catch (error) {
+    next(error);
+  }
+};
