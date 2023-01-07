@@ -3,11 +3,8 @@ const TodoModel = require("../../model/todo.model");
 const httpMocks = require("node-mocks-http");
 const newTodo = require("../mock-data/new-todo.json");
 const allTodos = require("../mock-data/all-todos.json");
-
-TodoModel.create = jest.fn();
-TodoModel.find = jest.fn();
-TodoModel.findById = jest.fn();
-TodoModel.findByIdAndUpdate = jest.fn();
+//its posible all function, class in a mock of jest
+jest.mock("../../model/todo.model");
 let req, res, next;
 const todoId = "63b77789208d4daba8e53fd9";
 beforeEach(() => {
